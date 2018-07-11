@@ -1,20 +1,35 @@
 import React from 'react';
-import SearchForm from './main/searchForm';
-
+import axios from 'axios';
 import moment from 'moment';
+import SearchForm from './main/SearchForm';
+import WithResults from './main/query/WithResults';
+import WithoutResults from './main/query/WithoutResults';
+import Repos from './main/results/Repos';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      value: '',
+      data: undefined
+    };
 
     this.handleValueChange = this.handleValueChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.request = this.request.bind(this);
+  }
+
+  request(urlStr) {
+    axios.get(urlStr)
+      .then(response => {
+      // const stuff = response.data.items;
+      this.setState({data: response.data.items});
+      console.log(response.data.items)
+    });
   }
 
   handleValueChange(e) {
-    console.log('this is the target value: ' + e.target.value);
+    console.log('this is the e.target.value: ' + e.target.value);
     this.setState({value: e.target.value});
   }
 
@@ -22,15 +37,17 @@ class Main extends React.Component {
     console.log(e);
     console.log(this.state.value)
 
+    // this date is the correct format for Github's search API
     const oneMonthAgo = moment().subtract(1, "month").format("YYYY-MM-DD");
 
-    const url = `https://api.github.com/search/repositories?q=language:${this.state.value}+created:>${oneMonthAgo}&sort=stars`;
-
+    const url = `https://api.github.com/search/repositories?q=language:${this.state.value}+created:>${oneMonthAgo}&sort=stars&per_page=3`;
     console.log(url);
+
+    this.request(url);
   }
 
   render() {
-    console.log('this is the state: ' + this.state.value);
+    console.log('this is the state.value: ' + this.state.value);
 
     return (
       <main>
@@ -39,14 +56,16 @@ class Main extends React.Component {
           submitHandler={this.handleSubmit}
         />
 
-        <section id="listing">
-          <h2 id="heading"></h2>
-          <p id="month-listing"></p>
-        </section>
-
-        <section id="repos">
-            
-        </section>
+        {
+          this.state.data
+            ?
+              <React.Fragment>
+                <WithResults inputValue={this.state.value} />
+                <Repos searchData={this.state.data} />
+              </React.Fragment>
+            :
+              <WithoutResults inputValue={this.state.value} />
+        }
       </main>
     );
   }
