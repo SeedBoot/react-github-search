@@ -10,12 +10,18 @@ class Tile extends React.Component {
           { data.name }
         </a>
 
-        <p>{ data.description }</p>
+        <p>
+          { data.description }
+        </p>
 
         <div className="info">
-          <p>Created: { moment(data.created_at).format("Do MMMM YYYY") }</p>
+          <p>
+            Created: { moment(data.created_at).format("Do MMMM YYYY") }
+          </p>
 
-          <p>Stars: { data.stargazers_count }</p>
+          <p>
+            Stars: { data.stargazers_count }
+          </p>
         </div>
       </div>
     );

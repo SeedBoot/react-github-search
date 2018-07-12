@@ -1,34 +1,34 @@
 import React from 'react';
 
 import {
-  gitHubMonthQuery, oneMonthFormat,
+  oneMonthFormat,
   gitHubUrl, axiosRequest
 } from '../utils';
 
 import SearchForm from './main/SearchForm';
-import WithResults from './main/query/WithResults';
-// import WithoutResults from './main/query/WithoutResults';
-import Repos from './main/results/Repos';
+import SearchHeader from './main/SearchHeader';
+import ResultSection from './main/ResultSection';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      lang: '',
       data: undefined
     };
   }
 
-  onTermChange = (value) => {
-    this.setState({ value });
+  onTermChange = (lang) => {
+    this.setState({ lang });
   }
 
   onSearch = () => {
-    axiosRequest(gitHubUrl(this.state.value, gitHubMonthQuery), this);
+    axiosRequest(gitHubUrl(this.state.lang))
+      .then(data => this.setState({ data }));
   }
 
   render() {
-    console.log('this is the state.value: ' + this.state.value);
+    console.log('this is the state.value: ' + this.state.lang);
 
     return (
       <main>
@@ -37,12 +37,12 @@ class Main extends React.Component {
           submitHandler={ this.onSearch }
         />
 
-        <WithResults
-          inputValue={ this.state.value }
-          month={oneMonthFormat}
+        <SearchHeader
+          lang={ this.state.lang }
+          month={ oneMonthFormat }
         />
 
-        <Repos
+        <ResultSection
           searchData={ this.state.data }
         />
       </main>
