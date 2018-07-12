@@ -22,20 +22,19 @@ class Main extends React.Component {
   request(urlStr) {
     axios.get(urlStr)
       .then(response => {
-      // const stuff = response.data.items;
       this.setState({data: response.data.items});
       console.log(response.data.items)
     });
   }
 
   handleValueChange(e) {
-    console.log('this is the e.target.value: ' + e.target.value);
+    // console.log('this is the e.target.value: ' + e.target.value);
     this.setState({value: e.target.value});
   }
 
   handleSubmit(e) {
     console.log(e);
-    console.log(this.state.value)
+    console.log(this.state.value);
 
     // this date is the correct format for Github's search API
     const oneMonthAgo = moment().subtract(1, "month").format("YYYY-MM-DD");
@@ -51,8 +50,7 @@ class Main extends React.Component {
 
     return (
       <main>
-        <SearchForm
-          changeHandler={this.handleValueChange}
+        <SearchForm changeHandler={this.handleValueChange}
           submitHandler={this.handleSubmit}
         />
 
