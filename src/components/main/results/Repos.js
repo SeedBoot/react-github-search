@@ -3,19 +3,21 @@ import Tile from './tile/Tile';
 
 class Repos extends React.Component {
   render() {
-    // if (this.props.searchData) {
+    if (this.props.searchData) {
     const tiles = this.props.searchData.map((data) =>
-      <Tile key={data.id}
-        searchData={data}
+      <Tile key={ data.id }
+        searchData={ data }
       />
     );
     
       return (
         <section id="repos">
-          {tiles}
+          { tiles }
         </section>
       );
-    // }
+    }
+    
+    return null;
   }
 }
 

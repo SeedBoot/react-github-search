@@ -4,7 +4,7 @@ class WithoutResults extends React.Component {
   render() {
     return (
       <section id="listing">
-        <h2 id="heading">Most Stars: {this.props.inputValue}</h2>
+        <h2 id="heading">Most Stars: {this.props.inputValue || '...'}</h2>
       </section>
     );
   }

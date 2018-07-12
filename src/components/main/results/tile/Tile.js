@@ -6,16 +6,16 @@ class Tile extends React.Component {
     const data = this.props.searchData;
     return (
       <div className="tile">
-        <a href={data.html_url} target="_blank">
-          {data.name}
+        <a href={ data.html_url } target="_blank">
+          { data.name }
         </a>
 
-        <p>{data.description}</p>
+        <p>{ data.description }</p>
 
         <div className="info">
-          <p>Created: {moment(data.created_at).format("Do MMMM YYYY")}</p>
+          <p>Created: { moment(data.created_at).format("Do MMMM YYYY") }</p>
 
-          <p>Stars: {data.stargazers_count}</p>
+          <p>Stars: { data.stargazers_count }</p>
         </div>
       </div>
     );

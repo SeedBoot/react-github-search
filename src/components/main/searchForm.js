@@ -1,22 +1,38 @@
 import React from 'react';
 
 class SearchForm extends React.Component {
+
+  handleChange = (e) => {
+    return this.props.changeHandler(e.target.value);
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    return this.props.submitHandler();
+  }
+
   render() {
     return (
-      <form id="form"
+      <form
+        id="form"
         action="#"
         method="get"
-        onSubmit={this.props.submitHandler}
+        onSubmit={ this.handleSubmit }
       >
-        <input id="input"
+        <input
+          id="input"
           type="text"
-          /*value={this.state.value}*/
-          onChange={this.props.changeHandler}
+          onChange={ this.handleChange }
         />
-        <input type="submit" value="Search" />
+
+        <input
+          type="submit"
+          value="Search"
+        />
       </form>
     );
   }
 }
 
 export default SearchForm;
+ 
