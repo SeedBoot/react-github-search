@@ -3,11 +3,11 @@ import React from 'react';
 import {
   oneMonthFormat,
   gitHubUrl, axiosRequest
-} from '../utils';
+} from '../../utils';
 
-import SearchForm from './main/SearchForm';
-import SearchHeader from './main/SearchHeader';
-import ResultSection from './main/ResultSection';
+import SearchForm from '../searchForm/SearchForm';
+import SearchHeader from '../searchHeader/SearchHeader';
+import ResultSection from '../resultSection/ResultSection';
 
 class Main extends React.Component {
   constructor(props) {
