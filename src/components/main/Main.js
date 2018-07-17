@@ -5,9 +5,11 @@ import {
   gitHubUrl, axiosRequest
 } from '../../utils';
 
-import SearchForm from '../searchForm/SearchForm';
-import SearchHeader from '../searchHeader/SearchHeader';
-import ResultSection from '../resultSection/ResultSection';
+import SearchForm from '../SearchForm/SearchForm';
+import SearchHeader from '../SearchHeader/SearchHeader';
+import ResultSection from '../ResultSection/ResultSection';
+
+import './Main.css';
 
 class Main extends React.Component {
   constructor(props) {
@@ -33,17 +35,17 @@ class Main extends React.Component {
     return (
       <main>
         <SearchForm
-          changeHandler={ this.onTermChange }
-          submitHandler={ this.onSearch }
+          changeHandler={this.onTermChange}
+          submitHandler={this.onSearch}
         />
 
         <SearchHeader
-          lang={ this.state.lang }
-          month={ oneMonthFormat }
+          lang={this.state.lang}
+          month={oneMonthFormat}
         />
 
         <ResultSection
-          searchData={ this.state.data }
+          searchData={this.state.data}
         />
       </main>
     );

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './SearchForm.css';
+
 class SearchForm extends React.Component {
 
   handleChange = (e) => {
@@ -17,12 +19,12 @@ class SearchForm extends React.Component {
         id="form"
         action="#"
         method="get"
-        onSubmit={ this.handleSubmit }
+        onSubmit={this.handleSubmit}
       >
         <input
           id="input"
           type="text"
-          onChange={ this.handleChange }
+          onChange={this.handleChange}
         />
 
         <input
@@ -35,4 +37,3 @@ class SearchForm extends React.Component {
 }
 
 export default SearchForm;
- 
