@@ -8,7 +8,10 @@ class Tile extends React.Component {
     const data = this.props.searchData;
     return (
       <div className="tile">
-        <a href={data.html_url} target="_blank">
+        <a
+          href={data.html_url}
+          target="_blank"
+        >
           {data.name}
         </a>
 

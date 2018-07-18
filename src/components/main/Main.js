@@ -30,7 +30,7 @@ class Main extends React.Component {
   }
 
   render() {
-    console.log('this is the state.value: ' + this.state.lang);
+    console.log('this is the state.lang: ' + this.state.lang);
 
     return (
       <main>
