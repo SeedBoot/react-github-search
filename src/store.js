@@ -1,4 +1,12 @@
-import { createStore } from 'redux';
-import githubSearch from '../actions';
+import { applyMiddleware, createStore } from 'redux';
+import reducer from './reducer';
+import logger from 'redux-logger';
 
-export const store = createStore(githubSearch)
+export default createStore(
+    reducer,
+    applyMiddleware(logger)
+);
+
+// store.subscribe()
+// store.dispatch()
+// store.getState()

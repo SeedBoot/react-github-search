@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { termChange } from '../../actions';
 
 import {
   oneMonthFormat,
@@ -15,22 +18,27 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lang: '',
+      // lang: '',
       data: undefined
     };
   }
 
   onTermChange = (lang) => {
-    this.setState({ lang });
+    // this.setState({ lang });
+    this.props.dispatch(termChange(lang));
   }
 
   onSearch = () => {
-    axiosRequest(gitHubUrl(this.state.lang))
+    axiosRequest(gitHubUrl(this.props.lang))
       .then(data => this.setState({ data }));
   }
 
   render() {
-    console.log('this is the state.lang: ' + this.state.lang);
+    // console.log('this is the state.lang: ' + this.state.lang);
+
+    console.log('-------------------------');
+    console.log(`this is the props.lang: ${this.props.lang}`);
+    console.log('-------------------------');
 
     return (
       <main>
@@ -40,7 +48,7 @@ class Main extends React.Component {
         />
 
         <SearchHeader
-          lang={this.state.lang}
+          lang={this.props.lang}
           month={oneMonthFormat}
         />
 
@@ -52,4 +60,18 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+// const mapDispatchToProps = dispatch => {
+//   return {
+
+//   };
+// }
+
+const mapStateToProps = state => {
+  return {
+    lang: state.lang
+  };
+}
+
+export default connect(mapStateToProps)(Main);
+
+// export default Main;

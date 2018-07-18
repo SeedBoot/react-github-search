@@ -1,19 +1,13 @@
-import { handleActions } from 'redux-actions';
 
+const INITIAL_STATE = {
+    lang: ''
+};
 
-export default handleActions({
-    [termChange](state) {
-        return state;
+export default (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case 'TERM_CHANGE':
+            return { ...state, lang: action.payload }
+        default:
+            return state;
     }
-}, '')
-
-// export const formReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case termChange:
-//             return Object.assign({}, state, {
-//                 visibilityFilter: action.filter
-//             })
-//         default:
-//             return state
-//     }
-// }
+}
