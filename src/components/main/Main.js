@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { termChange } from '../../actions';
+import { termChange, dataChange } from '../../actions';
 
 import {
   oneMonthFormat,
@@ -15,13 +15,6 @@ import ResultSection from '../ResultSection/ResultSection';
 import './Main.css';
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // lang: '',
-      data: undefined
-    };
-  }
 
   onTermChange = (lang) => {
     // this.setState({ lang });
@@ -30,14 +23,15 @@ class Main extends React.Component {
 
   onSearch = () => {
     axiosRequest(gitHubUrl(this.props.lang))
-      .then(data => this.setState({ data }));
+      // .then(data => this.setState({ data }))
+      .then(data => this.props.dispatch(dataChange(data)));
   }
 
   render() {
-    // console.log('this is the state.lang: ' + this.state.lang);
 
     console.log('-------------------------');
     console.log(`this is the props.lang: ${this.props.lang}`);
+    console.log(`this is the props.data: ${this.props.data}`);
     console.log('-------------------------');
 
     return (
@@ -53,7 +47,7 @@ class Main extends React.Component {
         />
 
         <ResultSection
-          searchData={this.state.data}
+          searchData={this.props.data}
         />
       </main>
     );
@@ -68,7 +62,8 @@ class Main extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    lang: state.lang
+    lang: state.lang,
+    data: state.data,
   };
 }
 
