@@ -1,12 +1,6 @@
 import React from 'react';
 
-import './SearchForm.css';
-
 class SearchForm extends React.Component {
-
-  handleChange = (e) => {
-    return this.props.changeHandler(e.target.value);
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -21,16 +15,7 @@ class SearchForm extends React.Component {
         method="get"
         onSubmit={this.handleSubmit}
       >
-        <input
-          id="input"
-          type="text"
-          onChange={this.handleChange}
-        />
-
-        <input
-          type="submit"
-          value="Search"
-        />
+        {this.props.children}
       </form>
     );
   }

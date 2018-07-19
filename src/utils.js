@@ -6,8 +6,8 @@ export const gitHubMonthQuery = moment().subtract(1, "month").format("YYYY-MM-DD
 // this provides a nice formatted date for the repo results
 export const oneMonthFormat = moment().subtract(1, "month").format("Do MMMM YYYY");
 
-export const gitHubUrl = (lang) =>
-  `https://api.github.com/search/repositories?q=language:${lang}+created:>${gitHubMonthQuery}&sort=stars&per_page=3`;
+export const gitHubUrl = (lang, numberOfResults) =>
+  `https://api.github.com/search/repositories?q=language:${lang}+created:>${gitHubMonthQuery}&sort=stars&per_page=${numberOfResults}`;
 
 export const axiosRequest = (urlStr) => {
   return axios.get(urlStr)
@@ -15,5 +15,5 @@ export const axiosRequest = (urlStr) => {
       console.log(`Status code: ${response.status}`);
       console.log('Response data array:\n', response.data.items);
       return response.data.items;
-  });
+    });
 };
