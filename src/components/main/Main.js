@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import {
-    termChange,
-    dateChange,
-    numberOfResultsChange,
-    dataChange,
+    termChange, dateChange,
+    numberOfResultsChange, dataChange,
+    dataSuccess,
 } from '../../actions';
 
 import {
-    monthFormat,
-    axiosRequest
+    monthFormat, axiosRequest
 } from '../../utils';
 
 import SearchForm from '../SearchForm/SearchForm';
@@ -26,57 +24,48 @@ import './Main.css';
 
 class Main extends React.Component {
 
-    // stateCheck = () => {
-    //     console.log('-------------------------');
-    //     for (let i in this.props) {
-    //         if (this.props[i] !== this.props.dispatch) {
-    //             console.log(`this is the props.${i}: ${this.props[i]}`)
-    //         }
-    //     }
-    //     console.log('-------------------------');
-    // };
-
-    // onTermChange = lang => {
-    //     this.props.dispatch(termChange(lang));
-    // }
-
     onTermChange = lang => {
         this.props.termChange(lang);
     }
-
-    // onNumberOfResultsChange = (number) => {
-    //     this.props.dispatch(numberOfResultsChange(number));
-    // }
-
-    onNumberOfResultsChange = (number) => {
-        this.props.numberOfResultsChange(number);
-    }
-
-    // onMonthChange = (number) => {
-    //     this.props.dispatch(dateChange(number));
-    // }
 
     onMonthChange = (number) => {
         this.props.dateChange(number);
     }
 
-    // onSearch = () => {
-    //     const { lang, numberOfResults, date } = this.props;
-
-    //     axiosRequest({ lang, numberOfResults, date })
-    //         .then(data => this.props.dispatch(dataChange(data)));
-    // }
+    onNumberOfResultsChange = (number) => {
+        this.props.numberOfResultsChange(number);
+    }
 
     onSearch = () => {
         const { lang, numberOfResults, date } = this.props;
 
         axiosRequest({ lang, numberOfResults, date })
-            .then(data => this.props.dataChange(data));
+            .then(response => {
+                console.log(`Status code: ${response.status}`);
+                console.log('Response data array:\n', response.data.items);
+
+                if (response.status === 200) {
+                    // if (response.data.items.language === null) {
+                    //     return null;
+                    // }
+                    // const langName = response.data.items.language;
+
+                    // return this.props.dataSuccess({ [response.data.items[0].language]: response.data.items });
+                    return this.props.dataSuccess(response.data.items);
+
+                }
+            })
+        // .then(data => this.props.dataChange(data));
+
+        // .then(data => {
+        //     console.log(data);
+        //     this.props.dataSuccess(data.items);
+        // })
+
+        // )
     }
 
     render() {
-        // this.stateCheck();
-
         return (
             <main>
                 <SearchForm
@@ -102,29 +91,32 @@ class Main extends React.Component {
                 />
 
                 <ResultSection
-                    searchData={this.props.data}
+                    searchData={this.props.langData}
                 />
             </main>
         );
     }
 }
 
-
 const mapStateToProps = state => {
+    const { lang, date, numberOfResults, data, langData } = state;
+
     return {
-        lang: state.lang,
-        date: state.date,
-        numberOfResults: state.numberOfResults,
-        data: state.data,
+        lang,
+        date,
+        numberOfResults,
+        data,
+        langData
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         termChange,
-        numberOfResultsChange,
         dateChange,
-        dataChange
+        numberOfResultsChange,
+        dataChange,
+        dataSuccess,
     }, dispatch);
 }
 

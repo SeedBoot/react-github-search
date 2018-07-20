@@ -1,11 +1,9 @@
-// import { gitHubMonthQuery } from './utils';
-
 const INITIAL_STATE = {
-    // gitHubURL: (lang) => `https://api.github.com/search/repositories?q=language:${lang}+created:>${gitHubMonthQuery}&sort=stars&per_page=3`,
     lang: '',
     date: 1,
     numberOfResults: 3,
-    data: undefined
+    data: undefined,
+    langData: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, numberOfResults: action.payload }
         case 'DATA_CHANGE':
             return { ...state, data: action.payload }
+        case 'DATA_SUCCESS':
+            return { ...state, langData: { ...state.langData, [action.payload[0].language]: action.payload } }
         default:
             return state;
     }

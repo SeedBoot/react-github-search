@@ -11,3 +11,9 @@ export const numberOfResultsChange = createAction(NUMBER_OF_RESULTS_CHANGE);
 
 const DATA_CHANGE = 'DATA_CHANGE';
 export const dataChange = createAction(DATA_CHANGE);
+
+const DATA_SUCCESS = 'DATA_SUCCESS';
+export const dataSuccess = createAction(DATA_SUCCESS);
+
+const DATA_FAILURE = 'DATA_FAILURE';
+export const dataFailure = createAction(DATA_FAILURE);

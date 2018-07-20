@@ -19,10 +19,5 @@ export const axiosRequest = ({ lang, numberOfResults, num }) => {
         '&per_page=' + numberOfResults +
         '&sort=stars';
 
-    return axios.get(gitHubUrl)
-        .then(response => {
-            console.log(`Status code: ${response.status}`);
-            console.log('Response data array:\n', response.data.items);
-            return response.data.items;
-        });
+    return axios.get(gitHubUrl);
 };
