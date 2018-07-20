@@ -5,7 +5,7 @@ import './Tile.css';
 
 class Tile extends React.Component {
   render() {
-    const data = this.props.searchData;
+    const data = this.props.data;
     return (
       <div className="tile">
         <a

@@ -1,27 +1,43 @@
 import React from 'react';
-import Tile from '../Tile/Tile';
+import TileOfTiles from '../TileOfTiles/TileOfTiles';
+// import Tile from '../Tile/Tile';
 
 class ResultSection extends React.Component {
   render() {
     if (this.props.searchData) {
-      console.log('this.props.searchdata', this.props.searchData)
-      let i;
-      for (i in this.props.searchData) {
-        console.log('tile render:\n', this.props.searchData[i])
-        const tiles = this.props.searchData[i].map((data) =>
-          // const tiles = this.props.searchData.map((data) =>
-          <Tile
-            key={data.id}
-            searchData={data}
-          />
-        );
 
-        return (
-          <section>
-            {tiles}
-          </section>
-        );
-      }
+      const results = this.props.searchData;
+
+      console.log('result section, before the loop', results);
+
+      const tileoftile = () => {
+        for (let i in results) {
+          if (results.hasOwnProperty(i)) {
+            console.log('result section prop within the loop:', results)
+            return (
+              <React.Fragment>
+                <h3>{i}</h3>
+                <TileOfTiles
+                  // key={i}
+                  values={results[i]}
+                />
+              </React.Fragment>
+            );
+          }
+        }
+      };
+
+      // const tileoftile = Object.keys(results).map((results) => {
+      //   console.log(results)
+      // })
+
+
+      return (
+        <section>
+          {tileoftile()}
+        </section>
+      );
+      // }
     }
 
     return null;

@@ -12,6 +12,7 @@ export const monthFormat = (num = 1) =>
 // export 
 
 export const axiosRequest = ({ lang, numberOfResults, num }) => {
+    console.log(num)
     const gitHubUrl =
         'https://api.github.com/search/repositories?q=' +
         'language:' + lang +

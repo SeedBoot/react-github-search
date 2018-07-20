@@ -17,7 +17,13 @@ export default (state = INITIAL_STATE, action) => {
         case 'DATA_CHANGE':
             return { ...state, data: action.payload }
         case 'DATA_SUCCESS':
-            return { ...state, langData: { ...state.langData, [action.payload[0].language]: action.payload } }
+            return {
+                ...state,
+                langData: {
+                    ...state.langData,
+                    [action.payload[0].language]: action.payload
+                }
+            }
         default:
             return state;
     }

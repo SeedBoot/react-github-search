@@ -99,14 +99,12 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = state => {
-    const { lang, date, numberOfResults, data, langData } = state;
-
     return {
-        lang,
-        date,
-        numberOfResults,
-        data,
-        langData
+        lang: state.lang,
+        date: state.date,
+        numberOfResults: state.numberOfResults,
+        data: state.data,
+        langData: state.langData,
     };
 }
 
