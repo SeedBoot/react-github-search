@@ -1,97 +1,131 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import {
-  termChange,
-  dataChange,
-  numberOfResultsChange
+    termChange,
+    dateChange,
+    numberOfResultsChange,
+    dataChange,
 } from '../../actions';
 
 import {
-  oneMonthFormat,
-  gitHubUrl, axiosRequest
+    monthFormat,
+    axiosRequest
 } from '../../utils';
 
 import SearchForm from '../SearchForm/SearchForm';
+import SearchInput from '../SearchInput/SearchInput';
 import OptionMenu from '../OptionMenu/OptionMenu';
+import SelectMonth from '../SelectMonth/SelectMonth';
+import SelectResultsNum from '../SelectResultsNum/SelectResultsNum';
 import SearchHeader from '../SearchHeader/SearchHeader';
 import ResultSection from '../ResultSection/ResultSection';
 
 import './Main.css';
-import SearchInput from '../SearchInput/SearchInput';
 
 class Main extends React.Component {
 
-  stateCheck = () => {
-    console.log('-------------------------');
-    for (let i in this.props) {
-      if (this.props[i] !== this.props.dispatch) {
-        console.log(`this is the props.${i}: ${this.props[i]}`)
-      }
+    // stateCheck = () => {
+    //     console.log('-------------------------');
+    //     for (let i in this.props) {
+    //         if (this.props[i] !== this.props.dispatch) {
+    //             console.log(`this is the props.${i}: ${this.props[i]}`)
+    //         }
+    //     }
+    //     console.log('-------------------------');
+    // };
+
+    // onTermChange = lang => {
+    //     this.props.dispatch(termChange(lang));
+    // }
+
+    onTermChange = lang => {
+        this.props.termChange(lang);
     }
-    console.log('-------------------------');
-  };
 
-  onTermChange = lang => {
-    // this.setState({ lang });
-    this.props.dispatch(termChange(lang));
-  }
+    // onNumberOfResultsChange = (number) => {
+    //     this.props.dispatch(numberOfResultsChange(number));
+    // }
 
-  onNumberOfResultsChange = (number) => {
-    this.props.dispatch(numberOfResultsChange(number));
-  }
+    onNumberOfResultsChange = (number) => {
+        this.props.numberOfResultsChange(number);
+    }
 
-  onSearch = () => {
-    axiosRequest(gitHubUrl(this.props.lang, this.props.numberOfResults))
-      // .then(data => this.setState({ data }))
-      .then(data => this.props.dispatch(dataChange(data)));
-  }
+    // onMonthChange = (number) => {
+    //     this.props.dispatch(dateChange(number));
+    // }
 
-  render() {
-    this.stateCheck();
+    onMonthChange = (number) => {
+        this.props.dateChange(number);
+    }
 
-    return (
-      <main>
-        <SearchForm
-          submitHandler={this.onSearch}
-        >
-          <SearchInput
-            changeHandler={this.onTermChange}
-          />
-        </SearchForm>
+    // onSearch = () => {
+    //     const { lang, numberOfResults, date } = this.props;
 
-        <OptionMenu
-          numberOfResultsHandler={this.onNumberOfResultsChange}
-        />
+    //     axiosRequest({ lang, numberOfResults, date })
+    //         .then(data => this.props.dispatch(dataChange(data)));
+    // }
 
-        <SearchHeader
-          lang={this.props.lang}
-          month={oneMonthFormat}
-        />
+    onSearch = () => {
+        const { lang, numberOfResults, date } = this.props;
 
-        <ResultSection
-          searchData={this.props.data}
-        />
-      </main>
-    );
-  }
+        axiosRequest({ lang, numberOfResults, date })
+            .then(data => this.props.dataChange(data));
+    }
+
+    render() {
+        // this.stateCheck();
+
+        return (
+            <main>
+                <SearchForm
+                    submitHandler={this.onSearch}
+                >
+                    <SearchInput
+                        changeHandler={this.onTermChange}
+                    />
+                </SearchForm>
+
+                <OptionMenu>
+                    <SelectMonth
+                        monthHandler={this.onMonthChange}
+                    />
+                    <SelectResultsNum
+                        numberOfResultsHandler={this.onNumberOfResultsChange}
+                    />
+                </OptionMenu>
+
+                <SearchHeader
+                    lang={this.props.lang}
+                    month={monthFormat(this.props.date)}
+                />
+
+                <ResultSection
+                    searchData={this.props.data}
+                />
+            </main>
+        );
+    }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-
-//   };
-// }
 
 const mapStateToProps = state => {
-  return {
-    // gitHubUrl: state.gitHubUrl,
-    lang: state.lang,
-    numberOfResults: state.numberOfResults,
-    data: state.data,
-  };
+    return {
+        lang: state.lang,
+        date: state.date,
+        numberOfResults: state.numberOfResults,
+        data: state.data,
+    };
 }
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        termChange,
+        numberOfResultsChange,
+        dateChange,
+        dataChange
+    }, dispatch);
+}
 
-// export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

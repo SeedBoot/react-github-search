@@ -7,7 +7,7 @@ class Header extends React.Component {
     return (
       <header>
         <h1>Github Search API</h1>
-        <p>Search for the top 3 Repositories of your favourite language created in the last month!</p>
+        <p>Search for the top Repositories of your favourite language created in the last month!</p>
       </header>
     );
   }
